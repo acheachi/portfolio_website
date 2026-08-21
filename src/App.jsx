@@ -86,6 +86,14 @@ const CERTIFICATIONS = [
     verifyHref: "https://www.kaggle.com/learn/certification/johnachillescolon/intermediate-machine-learning",
   },
   {
+    id: 0.5,
+    title: "Time Series",
+    issuer: "Kaggle",
+    date: "Aug 2026",
+    badgeImg: "https://storage.googleapis.com/kaggle-learn-certificates/35117861/a0dca686009bd8bd01f55c719956ed78.png",
+    verifyHref: "https://www.kaggle.com/learn/certification/johnachillescolon/time-series",
+  },
+  {
     id: 1,
     title: "Manage and Secure Power BI",
     issuer: "Microsoft Learn",
@@ -716,21 +724,19 @@ export default function App() {
         .about-text p{font-size:0.9rem;color:var(--tx2);line-height:1.95;margin-bottom:1rem}
         .about-text p strong{color:var(--tx);font-weight:600}
         .skills-list{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--div)}
-        .skill-item{font-family:var(--mono);font-size:0.68rem;color:var(--tx2);padding:0.6rem 0.8rem;border-right:1px solid var(--div);border-bottom:1px solid var(--div);transition:all 0.2s;letter-spacing:0.03em}
+        .skill-item{font-family:var(--mono);font-size:0.68rem;color:var(--tx2);padding:0.6rem 0.8rem;border-right:1px solid var(--div);border-top:1px solid var(--div);transition:all 0.2s;letter-spacing:0.03em}
         .skill-item:hover{color:var(--tx);background:var(--sf)}
         .skill-item:nth-child(2n){border-right:none}
-        .skill-item:nth-last-child(-n+2){border-bottom:none}
+        .skill-item:nth-child(-n+2){border-top:none}
         .projects-grid{display:grid;grid-template-columns:1fr 1fr;width:100%;max-width:900px;border:1px solid var(--div)}
-        .projects-grid > *{border-right:1px solid var(--div);border-bottom:1px solid var(--div)}
+        .projects-grid > *{border-right:1px solid var(--div);border-top:1px solid var(--div)}
         .projects-grid > *:nth-child(2n){border-right:none}
-        .projects-grid > *:nth-last-child(-n+2){border-bottom:none}
-        .projects-grid > *:last-child{border-bottom:none}
+        .projects-grid > *:nth-child(-n+2){border-top:none}
         .exp-wrap{max-width:640px;width:100%;border:1px solid var(--div)}
         .certs-grid{display:grid;grid-template-columns:1fr 1fr;width:100%;max-width:900px;border:1px solid var(--div)}
-        .certs-grid > *{border-right:1px solid var(--div);border-bottom:1px solid var(--div)}
+        .certs-grid > *{border-right:1px solid var(--div);border-top:1px solid var(--div)}
         .certs-grid > *:nth-child(2n){border-right:none}
-        .certs-grid > *:nth-last-child(-n+2){border-bottom:none}
-        .certs-grid > *:last-child{border-bottom:none}
+        .certs-grid > *:nth-child(-n+2){border-top:none}
         .webinars-wrap{max-width:680px;width:100%;border:1px solid var(--div)}
         .webinar-summary{padding:0.6rem 1rem;display:flex;justify-content:space-between;align-items:center}
         .resume-card{width:100%;max-width:640px;border:1px solid var(--div);padding:0 1.5rem}
@@ -766,17 +772,15 @@ export default function App() {
           .about-text p{font-size:0.86rem}
           .skills-list{grid-template-columns:1fr}
           .skill-item:nth-child(2n){border-right:1px solid var(--div)}
-          .skill-item:nth-last-child(-n+2){border-bottom:1px solid var(--div)}
-          .skill-item:last-child{border-bottom:none}
+          .skill-item{border-top:1px solid var(--div)}
+          .skill-item:first-child{border-top:none}
           .projects-grid{grid-template-columns:1fr;max-width:100%}
-          .projects-grid > *{border-right:none}
-          .projects-grid > *:nth-last-child(-n+2){border-bottom:1px solid var(--div)}
-          .projects-grid > *:last-child{border-bottom:none}
+          .projects-grid > *{border-right:none;border-top:1px solid var(--div)}
+          .projects-grid > *:first-child{border-top:none}
           .exp-wrap{max-width:100%}
           .certs-grid{grid-template-columns:1fr;max-width:100%}
-          .certs-grid > *{border-right:none}
-          .certs-grid > *:nth-last-child(-n+2){border-bottom:1px solid var(--div)}
-          .certs-grid > *:last-child{border-bottom:none}
+          .certs-grid > *{border-right:none;border-top:1px solid var(--div)}
+          .certs-grid > *:first-child{border-top:none}
           .webinars-wrap{max-width:100%}
           .resume-card{max-width:100%;padding:0 1.25rem}
           .resume-label{font-size:1.4rem}
