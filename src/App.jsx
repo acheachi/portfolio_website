@@ -311,7 +311,7 @@ const ChevronIcon = ({ open }) => (
 
 function SectionHeader({ num, label, centered }) {
   return (
-    <div style={{ display: "flex", justifyContent: centered ? "center" : "flex-start", alignItems: "baseline", gap: "0.6rem", marginBottom: "2rem", width: "100%" }}>
+    <div style={{ display: "flex", justifyContent: centered ? "center" : "flex-start", alignItems: "baseline", gap: "0.6rem", marginBottom: "2rem", width: centered ? "100%" : "auto" }}>
       <span style={{ fontFamily: "var(--mono)", fontSize: "0.62rem", color: "var(--tx3)", letterSpacing: "0.1em" }}>{num} —</span>
       <span style={{ fontFamily: "var(--mono)", fontSize: "0.62rem", color: "var(--acc)", letterSpacing: "0.22em", textTransform: "uppercase" }}>{label}</span>
     </div>
@@ -538,7 +538,7 @@ function MainPortfolio({ setPage }) {
             <div>
               <div style={{ fontFamily: "var(--mono)", fontSize: "0.62rem", color: "var(--acc)", letterSpacing: "0.22em", textTransform: "uppercase", marginBottom: "0.85rem" }}>skills</div>
               <div className="skills-list">
-                {["SQL","Data Visualization","Power BI","Power Query","Google Workspace","Microsoft 365","Cybersecurity","Cloud Security","Programming (Java, C++, C#, HTML/CSS, JS, React)","Project Management","Problem-Solving","Communication Skills","Python","Teamwork & Collaboration"].map(s => (
+                {["SQL","Data Analytics","Data Visualization","Data Cleaning","Pandas","Power BI","Power Query","DAX","Machine Learning","Google Workspace","Microsoft 365","Cybersecurity","Cloud Security","Networking","Programming (Java, C++, C#, HTML/CSS, JS, React)","Python","Generative AI & Prompt Engineering","IT Support","Project Management","Problem-Solving","Communication Skills","Teamwork & Collaboration"].map(s => (
                   <div key={s} className="skill-item">{s}</div>
                 ))}
               </div>
