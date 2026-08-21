@@ -1,225 +1,26 @@
 import { useState, useEffect } from "react";
 
-/* ─── DATA ─────────────────────────────────────────────────────────────── */
+/* ─── CONSTANTS ─────────────────────────────────────────────────────────── */
 
-const PROJECTS = [
-  {
-    id: 1,
-    tag: "Data Analytics",
-    title: "Olist E-Commerce Operations Dashboard",
-    desc: "End-to-end Power BI dashboard built on Olist's Brazilian e-commerce dataset. Star schema from 7 CSVs, DAX time intelligence, drill-through pages, and report-page tooltips tracking order fulfillment, delivery performance, and customer retention.",
-    tech: ["Power BI", "Power Query", "DAX", "Star Schema"],
-    href: "https://github.com/acheachi/olist-operations-dashboard",
-  },
-  {
-    id: 2,
-    tag: "Data Analytics",
-    title: "SQL Portfolio",
-    desc: "A collection of SQL-driven business analyses on Google BigQuery. Covers two datasets — 124,838 e-commerce orders and a regional retail KPI analysis — moving from raw SQL through visualization to written business reports, including a profit-loss finding masked by revenue-only reporting.",
-    tech: ["BigQuery", "SQL", "Google Sheets", "Google Docs"],
-    href: "https://github.com/acheachi/sql-portfolio",
-  },
+const NAV_LINKS = [
+  ["about",        "#about"],
+  ["projects",     "#projects"],
+  ["experience",   "#experience"],
+  ["certificates", "#certificates"],
+  ["webinars",     "#webinars"],
+  ["resume",       "#resume"],
 ];
 
-const EXPERIENCE = [
-  {
-    id: 1,
-    year: "2026",
-    role: "IT Intern",
-    org: "National Bureau of Investigation — Region VI",
-    desc: "Contributed to the development of a Case File Management System and supported IT operations including hardware troubleshooting, network maintenance, and user support.",
-  },
-  {
-    id: 2,
-    year: "2024",
-    role: "Researcher",
-    org: "BaHanap",
-    desc: "Contributed to research, technical documentation, coordination, and innovation planning for an offline flood rescue communication system using LoRaWAN and IoT, developed for thesis writing and startup competitions.",
-  },
-];
+/* ─── NOTION FETCHER ────────────────────────────────────────────────────── */
+// All data now comes from Notion via a Netlify serverless function.
+// To add a certificate, project, or webinar: just edit your Notion database.
+// No code changes needed.
 
-const CERTIFICATIONS = [
-  {
-    id: 0,
-    title: "Pandas",
-    issuer: "Kaggle",
-    date: "Aug 2026",
-    badgeImg: "https://storage.googleapis.com/kaggle-learn-certificates/35117861/84d3cf4ee171cc00669f7fc4c96a5aa7.png",
-    verifyHref: "https://www.kaggle.com/learn/certification/johnachillescolon/pandas",
-  },
-  {
-    id: 1,
-    title: "Manage and Secure Power BI",
-    issuer: "Microsoft Learn",
-    date: "Jul 2026",
-    badgeImg: "https://learn.microsoft.com/training/achievements/deploy-and-maintain-data-in-power-bi-social.png",
-    verifyHref: "https://learn.microsoft.com/api/achievements/share/en-us/JohnAchillesColon-4134/9A2ZMXLU?sharingId=3E67AFE0DFA83DF3",
-  },
-  {
-    id: 2,
-    title: "Design Effective Reports in Power BI",
-    issuer: "Microsoft Learn",
-    date: "Jul 2026",
-    badgeImg: "https://learn.microsoft.com/training/achievements/power-bi-effective-social.png",
-    verifyHref: "https://learn.microsoft.com/api/achievements/share/en-us/JohnAchillesColon-4134/8VENUQ7W?sharingId=3E67AFE0DFA83DF3",
-  },
-  {
-    id: 3,
-    title: "Prepare and Visualize Data with Microsoft Power BI",
-    issuer: "Microsoft Learn",
-    date: "Jul 2026",
-    badgeImg: "https://learn.microsoft.com/training/achievements/generic-trophy-social.png",
-    verifyHref: "https://learn.microsoft.com/api/achievements/share/en-us/JohnAchillesColon-4134/8VQC95DW?sharingId=3E67AFE0DFA83DF3",
-  },
-  {
-    id: 4,
-    title: "Advanced SQL",
-    issuer: "Kaggle",
-    date: "Jul 2026",
-    badgeImg: "https://storage.googleapis.com/kaggle-learn-certificates/35117861/0f19f67e7ba925ea2fabf2a34b658e39.png",
-    verifyHref: "https://www.kaggle.com/learn/certification/johnachillescolon/advanced-sql",
-  },
-  {
-    id: 4.5,
-    title: "Intro to Programming",
-    issuer: "Kaggle",
-    date: "Jul 2026",
-    badgeImg: "https://storage.googleapis.com/kaggle-learn-certificates/35117861/ef43e9c3200e1578bdaa0e442d26d9f8.png",
-    verifyHref: "https://www.kaggle.com/learn/certification/johnachillescolon/intro-to-programming",
-  },
-  {
-    id: 4.6,
-    title: "Help Desk Technician",
-    issuer: "ServiceDesk Simulator",
-    date: "Jul 2026",
-    badgeImg: "https://servicedesk-simulator.com/og-image.png",
-    verifyHref: "https://servicedesk-simulator.com/verify/jK89wyzHFLUI70iTY4TxSzEMKVj2/help_desk_technician",
-  },
-  {
-    id: 4.7,
-    title: "Python",
-    issuer: "Kaggle",
-    date: "Jul 2026",
-    badgeImg: "https://storage.googleapis.com/kaggle-learn-certificates/35117861/7e685e83fa3584e9148bd3a7515dab28.png",
-    verifyHref: "https://www.kaggle.com/learn/certification/johnachillescolon/python",
-  },
-  {
-    id: 5,
-    title: "Model Data with Power BI",
-    issuer: "Microsoft Learn",
-    date: "Jul 2026",
-    badgeImg: "https://learn.microsoft.com/training/achievements/model-data-power-bi-social.png",
-    verifyHref: "https://learn.microsoft.com/api/achievements/share/en-us/JohnAchillesColon-4134/ZJS4NB92?sharingId=3E67AFE0DFA83DF3",
-  },
-  {
-    id: 6,
-    title: "Use DAX in Semantic Models",
-    issuer: "Microsoft Learn",
-    date: "Jul 2026",
-    badgeImg: "https://learn.microsoft.com/training/achievements/use-dax-power-bi-desktop-social.png",
-    verifyHref: "https://learn.microsoft.com/api/achievements/share/en-us/JohnAchillesColon-4134/K9UPUF5B?sharingId=3E67AFE0DFA83DF3",
-  },
-  {
-    id: 7,
-    title: "Prepare Data for Analysis with Power BI",
-    issuer: "Microsoft Learn",
-    date: "Jul 2026",
-    badgeImg: "https://learn.microsoft.com/training/achievements/data-preparation-in-power-bi-social.png",
-    verifyHref: "https://learn.microsoft.com/api/achievements/share/en-us/JohnAchillesColon-4134/U7ZD65W3?sharingId=3E67AFE0DFA83DF3",
-  },
-  {
-    id: 8,
-    title: "Get Started with Microsoft Data Analytics",
-    issuer: "Microsoft Learn",
-    date: "Jun 2026",
-    badgeImg: "https://learn.microsoft.com/training/achievements/overview-data-analysis-power-bi-social.png",
-    verifyHref: "https://learn.microsoft.com/api/achievements/share/en-us/JohnAchillesColon-4134/H2ZCXFR8?sharingId=3E67AFE0DFA83DF3",
-  },
-  {
-    id: 9,
-    title: "Intro to SQL",
-    issuer: "Kaggle",
-    date: "Jun 2026",
-    badgeImg: "https://storage.googleapis.com/kaggle-learn-certificates/35117861/a662329e1783def8c33dee160bf762cd.png",
-    verifyHref: "https://www.kaggle.com/learn/certification/johnachillescolon/intro-to-sql",
-  },
-  {
-    id: 10,
-    title: "Junior Cybersecurity Analyst Career Path",
-    issuer: "Cisco",
-    date: "Dec 2025",
-    badgeImg: "https://images.credly.com/images/441578ec-c0f3-46cc-95fc-86b27e90cf4f/linkedin_thumb_image.png",
-    verifyHref: "https://www.credly.com/badges/8a9d0aba-3ae6-4b95-8319-a8e488386486/public_url",
-  },
-  {
-    id: 11,
-    title: "Prompt Design in Vertex AI Skill Badge",
-    issuer: "Google Cloud",
-    date: "Jun 2025",
-    badgeImg: "https://images.credly.com/images/cef82b2e-970a-4318-8e59-c3e26b7f5c19/linkedin_thumb_image.png",
-    verifyHref: "https://www.credly.com/badges/ba1e167c-ee8d-4360-986b-68cff73fb0d4/public_url",
-  },
-  {
-    id: 12,
-    title: "Introduction to Cybersecurity",
-    issuer: "Cisco",
-    date: "May 2025",
-    badgeImg: "https://images.credly.com/images/af8c6b4e-fc31-47c4-8dcb-eb7a2065dc5b/linkedin_thumb_I2CS__1_.png",
-    verifyHref: "https://www.credly.com/badges/215969d7-72b3-43c8-b894-d41b715995c1/public_url",
-  },
-  {
-    id: 13,
-    title: "CCNA: Switching, Routing, and Wireless Essentials",
-    issuer: "Cisco",
-    date: "Jan 2025",
-    badgeImg: "https://images.credly.com/images/f4ccdba9-dd65-4349-baad-8f05df116443/linkedin_thumb_CCNASRWE__1_.png",
-    verifyHref: "https://www.credly.com/badges/101f5da6-e0af-412e-9b51-24dbb1b1d92f/public_url",
-  },
-  {
-    id: 14,
-    title: "CCNA: Introduction to Networks",
-    issuer: "Cisco",
-    date: "Aug 2024",
-    badgeImg: "https://images.credly.com/images/70d71df5-f3dc-4380-9b9d-f22513a70417/linkedin_thumb_CCNAITN__1_.png",
-    verifyHref: "https://www.credly.com/badges/50cbc974-5883-40c5-9312-6afd56be34a5/public_url",
-  },
-];
-
-const WEBINARS = {
-  "Artificial Intelligence": [
-    { title: "Beyond the Black Box: Explainable AI in Game Development", date: "Oct 2025", file: "/certs/webinars/explainable-ai-game-dev.png" },
-    { title: "Shaping Tomorrow: Accelerating Economic Growth with AI", date: "Oct 2025", file: "/certs/webinars/ai-economic-growth.png" },
-    { title: "Generative AI and the Future of Content Creation", date: "Oct 2025", file: "/certs/webinars/generative-ai-content.png" },
-    { title: "AI in Governance: Promise and Ethical Issues", date: "Sept 2025", file: "/certs/webinars/ai-governance-ethics.png" },
-  ],
-  "Cybersecurity": [
-    { title: "DevSecOps: Integrating Security into the SDLC", date: "Oct 2025", file: "/certs/webinars/devsecops-sdlc.png" },
-    { title: "Shift-Left Security: Building Safer Pipelines with DevSecOps", date: "Oct 2025", file: "/certs/webinars/shift-left-security.png" },
-    { title: "Ctrl+Alt+Defend: Defending Critical Infrastructure from Cyber Threats", date: "Oct 2025", file: "/certs/webinars/ctrl-alt-defend.png" },
-    { title: "The Triple Shield: AI, Blockchain & Cybersecurity in Finance", date: "Sept 2025", file: "/certs/webinars/triple-shield-finance.png" },
-    { title: "Ethical Hacking and Cyber Security", date: "Sept 2023", file: "/certs/webinars/ethical-hacking-2023.pdf" },
-  ],
-  "Cloud & Emerging Tech": [
-    { title: "Cloud Migration Strategies for Enterprises", date: "Oct 2025", file: "/certs/webinars/cloud-migration.png" },
-    { title: "5G Technology and IoT: Transforming Connectivity for the Future", date: "Sept 2025", file: "/certs/webinars/5g-iot.png" },
-    { title: "Resilience Through Technology: IT Solutions for Disaster Risk Reduction", date: "Oct 2025", file: "/certs/webinars/it-disaster-risk.png" },
-  ],
-  "UX & Design": [
-    { title: "Human-Computer Interaction (HCI) and UX Beyond the Screen", date: "Oct 2025", file: "/certs/webinars/hci-ux.png" },
-    { title: "Design with Purpose: Usable and Accessible UX for the Future", date: "Sept 2025", file: "/certs/webinars/design-with-purpose.png" },
-  ],
-  "Creative & Multimedia": [
-    { title: "Visual Poetry: Creating Images That Speak", date: "Sept 2025", file: "/certs/webinars/visual-poetry.png" },
-    { title: "Anime In-Betweening Workflow: A Digital Approach Through Clip Studio Paint", date: "Sept 2025", file: "/certs/webinars/anime-inbetweening.png" },
-    { title: "Exploring the Fusion of Art and Technology in Multimedia Creation", date: "Sept 2023", file: "/certs/webinars/art-tech-fusion-2023.png" },
-  ],
-  "Project Management": [
-    { title: "Chaos to Clarity: Using PM Tools to Strengthen Leadership & Team Collaboration", date: "Oct 2025", file: "/certs/webinars/chaos-to-clarity-pm.png" },
-  ],
-};
-
-const WEBINAR_TOTAL = Object.values(WEBINARS).flat().length;
-const NAV_LINKS = [["about","#about"],["projects","#projects"],["experience","#experience"],["certificates","#certificates"],["webinars","#webinars"],["resume","#resume"]];
+async function fetchNotion(type) {
+  const res = await fetch(`/.netlify/functions/notion?type=${type}`);
+  if (!res.ok) throw new Error(`Failed to fetch ${type}`);
+  return res.json();
+}
 
 /* ─── ICONS ─────────────────────────────────────────────────────────────── */
 
@@ -268,6 +69,29 @@ const ChevronIcon = ({ open }) => (
     <polyline points="6 9 12 15 18 9"/>
   </svg>
 );
+
+/* ─── LOADING SKELETON ──────────────────────────────────────────────────── */
+
+function LoadingScreen() {
+  return (
+    <div style={{
+      minHeight: "100vh", background: "#17140F",
+      display: "flex", alignItems: "center", justifyContent: "center",
+      flexDirection: "column", gap: "1rem",
+    }}>
+      <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.72rem", color: "#4a654a", letterSpacing: "0.25em" }}>
+        loading portfolio...
+      </div>
+      <div style={{ width: "120px", height: "1px", background: "rgba(145,168,130,0.15)", position: "relative", overflow: "hidden" }}>
+        <div style={{
+          position: "absolute", inset: 0,
+          background: "linear-gradient(90deg, transparent, #91A882, transparent)",
+          animation: "shimmer 1.4s ease-in-out infinite",
+        }} />
+      </div>
+    </div>
+  );
+}
 
 /* ─── SHARED COMPONENTS ─────────────────────────────────────────────────── */
 
@@ -347,7 +171,7 @@ function WebinarRow({ w, isLast }) {
 
 /* ─── ALL CERTIFICATES PAGE ─────────────────────────────────────────────── */
 
-function AllCertificatesPage({ onBack }) {
+function AllCertificatesPage({ onBack, certifications }) {
   useEffect(() => { window.scrollTo(0, 0); }, []);
   return (
     <div className="wrapper" style={{ paddingTop: "6rem", paddingBottom: "4rem" }}>
@@ -355,9 +179,9 @@ function AllCertificatesPage({ onBack }) {
         style={{ fontFamily: "var(--mono)", fontSize: "0.68rem", background: "none", border: "none", color: "var(--tx3)", cursor: "pointer", display: "inline-flex", alignItems: "center", gap: "0.4rem", marginBottom: "2rem", letterSpacing: "0.08em" }}>
         <BackIcon /> back to portfolio
       </button>
-      <SectionHeader num="04" label={`all certificates · ${CERTIFICATIONS.length} total`} />
+      <SectionHeader num="04" label={`all certificates · ${certifications.length} total`} />
       <div className="certs-grid">
-        {CERTIFICATIONS.map(c => <CertRow key={c.id} c={c} />)}
+        {certifications.map((c, i) => <CertRow key={c.id ?? i} c={c} />)}
       </div>
     </div>
   );
@@ -365,26 +189,27 @@ function AllCertificatesPage({ onBack }) {
 
 /* ─── ALL WEBINARS PAGE ─────────────────────────────────────────────────── */
 
-function AllWebinarsPage({ onBack }) {
+function AllWebinarsPage({ onBack, webinars }) {
   useEffect(() => { window.scrollTo(0, 0); }, []);
+  const webinarTotal = Object.values(webinars).flat().length;
   return (
     <div className="wrapper" style={{ paddingTop: "6rem", paddingBottom: "4rem" }}>
       <button onClick={onBack}
         style={{ fontFamily: "var(--mono)", fontSize: "0.68rem", background: "none", border: "none", color: "var(--tx3)", cursor: "pointer", display: "inline-flex", alignItems: "center", gap: "0.4rem", marginBottom: "2rem", letterSpacing: "0.08em" }}>
         <BackIcon /> back to portfolio
       </button>
-      <SectionHeader num="05" label={`all webinars & training · ${WEBINAR_TOTAL} sessions`} />
+      <SectionHeader num="05" label={`all webinars & training · ${webinarTotal} sessions`} />
       <div className="webinars-wrap">
         <div className="webinar-summary" style={{ borderBottom: "1px solid var(--div)" }}>
           <span style={{ fontFamily: "var(--mono)", fontSize: "0.62rem", color: "var(--tx3)", letterSpacing: "0.08em" }}>
-            {Object.keys(WEBINARS).length} themes · click to expand
+            {Object.keys(webinars).length} themes · click to expand
           </span>
           <span style={{ fontFamily: "var(--mono)", fontSize: "0.62rem", color: "var(--tx3)" }}>
-            {Object.values(WEBINARS).map(i => i.length).join(" + ")}
+            {Object.values(webinars).map(i => i.length).join(" + ")}
           </span>
         </div>
         <div style={{ padding: "0 1rem" }}>
-          {Object.entries(WEBINARS).map(([theme, items]) => (
+          {Object.entries(webinars).map(([theme, items]) => (
             <WebinarGroup key={theme} theme={theme} items={items} />
           ))}
         </div>
@@ -395,9 +220,13 @@ function AllWebinarsPage({ onBack }) {
 
 /* ─── MAIN PORTFOLIO ────────────────────────────────────────────────────── */
 
-function MainPortfolio({ setPage }) {
+function MainPortfolio({ setPage, certifications, projects, experience, webinars }) {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+
+  const webinarTotal = Object.values(webinars).flat().length;
+  const previewCerts = certifications.slice(0, 6);
+  const previewWebinarEntries = Object.entries(webinars).slice(0, 5);
 
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 50);
@@ -417,9 +246,6 @@ function MainPortfolio({ setPage }) {
     setMenuOpen(false);
     setTimeout(() => document.querySelector(href)?.scrollIntoView({ behavior: "smooth" }), 50);
   };
-
-  const previewCerts = CERTIFICATIONS.slice(0, 6);
-  const previewWebinarEntries = Object.entries(WEBINARS).slice(0, 5);
 
   return (
     <>
@@ -457,8 +283,8 @@ function MainPortfolio({ setPage }) {
                 turning raw datasets into clear, business-relevant insights using SQL, Power BI, and BigQuery.
               </p>
               <div className="hero-stats">
-                <div className="stat-chip"><span>{CERTIFICATIONS.length}</span> certificates</div>
-                <div className="stat-chip"><span>{WEBINAR_TOTAL}</span> webinars</div>
+                <div className="stat-chip"><span>{certifications.length}</span> certificates</div>
+                <div className="stat-chip"><span>{webinarTotal}</span> webinars</div>
                 <div className="stat-chip"><span>NBI</span> internship</div>
                 <div className="stat-chip"><span>BaHanap</span> researcher</div>
               </div>
@@ -506,19 +332,27 @@ function MainPortfolio({ setPage }) {
         <div id="projects" className="section">
           <SectionHeader num="02" label="projects" />
           <div className="projects-grid">
-            {PROJECTS.map(p => {
+            {projects.map((p, i) => {
               const [hov, setHov] = useState(false);
               return (
-                <div key={p.id} onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}
-                  style={{ padding: "1.75rem", background: hov ? "rgba(145,168,130,0.04)" : "transparent", transition: "background 0.3s", cursor: "default" }}>
-                  <div style={{ fontFamily: "var(--mono)", fontSize: "0.62rem", color: "var(--acc)", letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: "0.7rem" }}>{p.tag}</div>
-                  <h3 style={{ fontFamily: "var(--display)", fontSize: "1.35rem", fontWeight: 400, color: "var(--tx)", marginBottom: "0.65rem", lineHeight: 1.2, letterSpacing: "-0.01em" }}>{p.title}</h3>
-                  <p style={{ fontFamily: "var(--body)", fontSize: "0.84rem", color: "var(--tx2)", lineHeight: 1.8, marginBottom: "1.1rem" }}>{p.desc}</p>
-                  <div style={{ display: "flex", flexWrap: "wrap", gap: "0.35rem", marginBottom: "1.1rem" }}>
-                    {p.tech.map(t => <span key={t} style={{ fontFamily: "var(--mono)", fontSize: "0.62rem", color: "var(--tx3)", padding: "0.18rem 0.55rem", border: "1px solid rgba(145,168,130,0.15)" }}>{t}</span>)}
+                <div key={p.id ?? i} onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}
+                  style={{
+                    padding: "1.5rem", border: "1px solid var(--div)",
+                    background: hov ? "rgba(145,168,130,0.04)" : "transparent",
+                    transition: "background 0.3s, border-color 0.3s", cursor: "default",
+                    display: "flex", flexDirection: "column",
+                    borderColor: hov ? "rgba(145,168,130,0.3)" : "var(--div)",
+                  }}>
+                  <div style={{ fontFamily: "var(--mono)", fontSize: "0.6rem", color: "var(--acc)", letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: "0.6rem" }}>{p.tag}</div>
+                  <h3 style={{ fontFamily: "var(--display)", fontSize: "1.25rem", fontWeight: 400, color: "var(--tx)", marginBottom: "0.6rem", lineHeight: 1.2, letterSpacing: "-0.01em" }}>{p.title}</h3>
+                  <p style={{ fontFamily: "var(--body)", fontSize: "0.82rem", color: "var(--tx2)", lineHeight: 1.8, marginBottom: "1rem", flex: 1 }}>{p.desc}</p>
+                  <div style={{ display: "flex", flexWrap: "wrap", gap: "0.3rem", marginBottom: "1rem" }}>
+                    {(Array.isArray(p.tech) ? p.tech : (p.tech ?? "").split(",").map(t => t.trim())).map(t => (
+                      <span key={t} style={{ fontFamily: "var(--mono)", fontSize: "0.6rem", color: "var(--tx3)", padding: "0.15rem 0.5rem", border: "1px solid rgba(145,168,130,0.15)" }}>{t}</span>
+                    ))}
                   </div>
                   <a href={p.href} target="_blank" rel="noreferrer"
-                    style={{ fontFamily: "var(--mono)", fontSize: "0.68rem", color: hov ? "var(--acc)" : "var(--tx3)", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "0.35rem", transition: "color 0.2s", letterSpacing: "0.08em" }}>
+                    style={{ fontFamily: "var(--mono)", fontSize: "0.65rem", color: hov ? "var(--acc)" : "var(--tx3)", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "0.35rem", transition: "color 0.2s", letterSpacing: "0.08em" }}>
                     view source <ArrowIcon />
                   </a>
                 </div>
@@ -531,35 +365,47 @@ function MainPortfolio({ setPage }) {
         <div id="experience" className="section">
           <SectionHeader num="03" label="experience" />
           <div className="exp-wrap">
-            {EXPERIENCE.map((e, i) => (
-              <div key={e.id} style={{ display: "grid", gridTemplateColumns: "80px 1fr", gap: "1.5rem", paddingBottom: i === EXPERIENCE.length - 1 ? 0 : "1.75rem", marginBottom: i === EXPERIENCE.length - 1 ? 0 : "1.75rem", borderBottom: i === EXPERIENCE.length - 1 ? "none" : "1px solid var(--div)" }}>
-                <div style={{ fontFamily: "var(--mono)", fontSize: "0.68rem", color: "var(--tx3)", letterSpacing: "0.05em", paddingTop: "0.1rem" }}>{e.year}</div>
-                <div>
-                  <div style={{ fontFamily: "var(--display)", fontSize: "1.1rem", fontWeight: 400, color: "var(--tx)", marginBottom: "0.15rem" }}>{e.role}</div>
-                  <div style={{ fontFamily: "var(--mono)", fontSize: "0.65rem", color: "var(--acc)", letterSpacing: "0.06em", marginBottom: "0.6rem" }}>{e.org}</div>
-                  <p style={{ fontFamily: "var(--body)", fontSize: "0.84rem", color: "var(--tx2)", lineHeight: 1.75 }}>{e.desc}</p>
+            {experience.map((e, i) => (
+              <div key={e.id ?? i} style={{
+                display: "grid", gridTemplateColumns: "90px 1fr", gap: "2rem",
+                paddingBottom: i === experience.length - 1 ? 0 : "2rem",
+                marginBottom: i === experience.length - 1 ? 0 : "2rem",
+                borderBottom: i === experience.length - 1 ? "none" : "1px solid var(--div)",
+                alignItems: "start",
+              }}>
+                <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: "0.4rem", paddingTop: "0.2rem" }}>
+                  <span style={{ fontFamily: "var(--mono)", fontSize: "0.65rem", color: "var(--tx3)", letterSpacing: "0.08em" }}>{e.year}</span>
+                  <div style={{ width: "6px", height: "6px", borderRadius: "50%", background: "var(--acc)", opacity: 0.6 }} />
+                </div>
+                <div style={{ borderLeft: "1px solid var(--div)", paddingLeft: "1.5rem" }}>
+                  <div style={{ fontFamily: "var(--display)", fontSize: "1.15rem", fontWeight: 400, color: "var(--tx)", marginBottom: "0.2rem", lineHeight: 1.2 }}>{e.role}</div>
+                  <div style={{ fontFamily: "var(--mono)", fontSize: "0.63rem", color: "var(--acc)", letterSpacing: "0.06em", marginBottom: "0.65rem" }}>{e.org}</div>
+                  <p style={{ fontFamily: "var(--body)", fontSize: "0.84rem", color: "var(--tx2)", lineHeight: 1.8 }}>{e.desc}</p>
                 </div>
               </div>
             ))}
           </div>
         </div>
 
-        {/* 04 — CERTIFICATES (top 5 preview) */}
+        {/* 04 — CERTIFICATES */}
         <div id="certificates" className="section section-centered">
-          <SectionHeader num="04" label={`certificates · showing 6 of ${CERTIFICATIONS.length}`} />
+          <SectionHeader num="04" label={`certificates · showing 6 of ${certifications.length}`} />
           <div className="certs-grid">
-            {previewCerts.map(c => <CertRow key={c.id} c={c} />)}
+            {previewCerts.map((c, i) => <CertRow key={c.id ?? i} c={c} />)}
           </div>
-          <ShowAllBtn label={`show all ${CERTIFICATIONS.length} certificates`} onClick={() => { setPage("certs"); window.scrollTo(0,0); }} />
+          <ShowAllBtn
+            label={`show all ${certifications.length} certificates`}
+            onClick={() => { setPage("certs"); window.scrollTo(0, 0); }}
+          />
         </div>
 
-        {/* 05 — WEBINARS (top 5 themes preview) */}
+        {/* 05 — WEBINARS */}
         <div id="webinars" className="section section-centered">
-          <SectionHeader num="05" label={`webinars & training · showing 5 of ${Object.keys(WEBINARS).length} themes`} />
+          <SectionHeader num="05" label={`webinars & training · showing 5 of ${Object.keys(webinars).length} themes`} />
           <div className="webinars-wrap">
             <div className="webinar-summary" style={{ borderBottom: "1px solid var(--div)" }}>
               <span style={{ fontFamily: "var(--mono)", fontSize: "0.62rem", color: "var(--tx3)", letterSpacing: "0.08em" }}>click theme to expand</span>
-              <span style={{ fontFamily: "var(--mono)", fontSize: "0.62rem", color: "var(--tx3)" }}>{WEBINAR_TOTAL} total sessions</span>
+              <span style={{ fontFamily: "var(--mono)", fontSize: "0.62rem", color: "var(--tx3)" }}>{webinarTotal} total sessions</span>
             </div>
             <div style={{ padding: "0 1rem" }}>
               {previewWebinarEntries.map(([theme, items]) => (
@@ -567,7 +413,10 @@ function MainPortfolio({ setPage }) {
               ))}
             </div>
           </div>
-          <ShowAllBtn label={`show all ${WEBINAR_TOTAL} webinars`} onClick={() => { setPage("webinars"); window.scrollTo(0,0); }} />
+          <ShowAllBtn
+            label={`show all ${webinarTotal} webinars`}
+            onClick={() => { setPage("webinars"); window.scrollTo(0, 0); }}
+          />
         </div>
 
         {/* 06 — RESUME */}
@@ -576,7 +425,9 @@ function MainPortfolio({ setPage }) {
           <div className="resume-row">
             <div>
               <div className="resume-label">John Achilles Colon</div>
-              <div className="resume-sub">// last updated {new Date().toLocaleDateString("en-US", { month: "long", year: "numeric" })} · PDF</div>
+              <div className="resume-sub">
+                // last updated {new Date().toLocaleDateString("en-US", { month: "long", year: "numeric" })} · PDF
+              </div>
             </div>
             <a href="/resume.pdf" download className="btn-dl">download resume <ArrowIcon /></a>
           </div>
@@ -605,6 +456,66 @@ function MainPortfolio({ setPage }) {
 
 export default function App() {
   const [page, setPage] = useState("home");
+
+  // ── Dynamic data from Notion ──────────────────────────────────────────
+  const [certifications, setCertifications] = useState([]);
+  const [projects,       setProjects]       = useState([]);
+  const [experience,     setExperience]     = useState([]);
+  const [webinars,       setWebinars]       = useState({});
+  const [loading,        setLoading]        = useState(true);
+  const [error,          setError]          = useState(null);
+
+  useEffect(() => {
+    async function loadAll() {
+      try {
+        const [certs, proj, exp, web] = await Promise.all([
+          fetchNotion("certifications"),
+          fetchNotion("projects"),
+          fetchNotion("experience"),
+          fetchNotion("webinars"),
+        ]);
+
+        setCertifications(certs);
+        setProjects(proj);
+        setExperience(exp);
+
+        // Group webinars by theme property
+        const grouped = web.reduce((acc, w) => {
+          const theme = w.theme || "Other";
+          if (!acc[theme]) acc[theme] = [];
+          acc[theme].push(w);
+          return acc;
+        }, {});
+        setWebinars(grouped);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadAll();
+  }, []);
+
+  if (loading) return (
+    <>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400&display=swap');
+        *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+        body{background:#17140F}
+        @keyframes shimmer{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
+      `}</style>
+      <LoadingScreen />
+    </>
+  );
+
+  if (error) return (
+    <div style={{ minHeight: "100vh", background: "#17140F", display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", gap: "1rem" }}>
+      <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.72rem", color: "#6A6058", letterSpacing: "0.15em" }}>
+        failed to load — check Notion connection
+      </span>
+      <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.62rem", color: "#4a654a" }}>{error}</span>
+    </div>
+  );
 
   return (
     <>
@@ -658,8 +569,8 @@ export default function App() {
         .skill-item:hover{color:var(--tx);background:var(--sf)}
         .skill-item:nth-child(2n){border-right:none}
         .skill-item:nth-last-child(-n+2){border-bottom:none}
-        .projects-grid{display:grid;grid-template-columns:1fr;border:1px solid var(--div);max-width:560px}
-        .exp-wrap{max-width:640px;width:100%}
+        .projects-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;max-width:900px}
+        .exp-wrap{max-width:780px;width:100%}
         .certs-grid{display:grid;grid-template-columns:1fr 1fr;width:100%;max-width:900px;border:1px solid var(--div)}
         .certs-grid > *{border-right:1px solid var(--div);border-bottom:1px solid var(--div)}
         .certs-grid > *:nth-child(2n){border-right:none}
@@ -679,6 +590,7 @@ export default function App() {
         .footer-links a{font-family:var(--mono);font-size:0.62rem;color:var(--tx3);text-decoration:none;transition:color 0.2s;letter-spacing:0.08em}
         .footer-links a:hover{color:var(--acc)}
         @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+        @keyframes shimmer{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
         @media(max-width:768px){
           .nav{padding:1rem 1.5rem}
           .nav.scrolled{padding:0.85rem 1.5rem}
@@ -700,7 +612,7 @@ export default function App() {
           .skill-item:nth-child(2n){border-right:1px solid var(--div)}
           .skill-item:nth-last-child(-n+2){border-bottom:1px solid var(--div)}
           .skill-item:last-child{border-bottom:none}
-          .projects-grid{max-width:100%}
+          .projects-grid{grid-template-columns:1fr;max-width:100%}
           .exp-wrap{max-width:100%}
           .certs-grid{grid-template-columns:1fr;max-width:100%}
           .certs-grid > *{border-right:none}
@@ -718,9 +630,9 @@ export default function App() {
         }
       `}</style>
 
-      {page === "home"     && <MainPortfolio setPage={setPage} />}
-      {page === "certs"    && <AllCertificatesPage onBack={() => setPage("home")} />}
-      {page === "webinars" && <AllWebinarsPage onBack={() => setPage("home")} />}
+      {page === "home"     && <MainPortfolio setPage={setPage} certifications={certifications} projects={projects} experience={experience} webinars={webinars} />}
+      {page === "certs"    && <AllCertificatesPage onBack={() => setPage("home")} certifications={certifications} />}
+      {page === "webinars" && <AllWebinarsPage onBack={() => setPage("home")} webinars={webinars} />}
     </>
   );
 }
