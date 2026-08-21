@@ -48,6 +48,38 @@ const CERTIFICATIONS = [
     verifyHref: "https://www.kaggle.com/learn/certification/johnachillescolon/pandas",
   },
   {
+    id: 0.1,
+    title: "Data Visualization",
+    issuer: "Kaggle",
+    date: "Aug 2026",
+    badgeImg: "https://storage.googleapis.com/kaggle-learn-certificates/35117861/256810ccb44228d529fcc07f9d9f2ca8.png",
+    verifyHref: "https://www.kaggle.com/learn/certification/johnachillescolon/data-visualization",
+  },
+  {
+    id: 0.2,
+    title: "Data Cleaning",
+    issuer: "Kaggle",
+    date: "Aug 2026",
+    badgeImg: "https://storage.googleapis.com/kaggle-learn-certificates/35117861/a4456501cfcfa0a316cffd82cec6196a.png",
+    verifyHref: "https://www.kaggle.com/learn/certification/johnachillescolon/data-cleaning",
+  },
+  {
+    id: 0.3,
+    title: "Intro to Machine Learning",
+    issuer: "Kaggle",
+    date: "Aug 2026",
+    badgeImg: "https://storage.googleapis.com/kaggle-learn-certificates/35117861/884330ae7dd0c1c083915bdf3e66d392.png",
+    verifyHref: "https://www.kaggle.com/learn/certification/johnachillescolon/intro-to-machine-learning",
+  },
+  {
+    id: 0.4,
+    title: "Intermediate Machine Learning",
+    issuer: "Kaggle",
+    date: "Aug 2026",
+    badgeImg: "https://storage.googleapis.com/kaggle-learn-certificates/35117861/642cae8efe61eac7098cd994d467ec6c.png",
+    verifyHref: "https://www.kaggle.com/learn/certification/johnachillescolon/intermediate-machine-learning",
+  },
+  {
     id: 1,
     title: "Manage and Secure Power BI",
     issuer: "Microsoft Learn",
@@ -355,9 +387,11 @@ function AllCertificatesPage({ onBack }) {
         style={{ fontFamily: "var(--mono)", fontSize: "0.68rem", background: "none", border: "none", color: "var(--tx3)", cursor: "pointer", display: "inline-flex", alignItems: "center", gap: "0.4rem", marginBottom: "2rem", letterSpacing: "0.08em" }}>
         <BackIcon /> back to portfolio
       </button>
-      <SectionHeader num="04" label={`all certificates · ${CERTIFICATIONS.length} total`} />
-      <div className="certs-grid">
-        {CERTIFICATIONS.map(c => <CertRow key={c.id} c={c} />)}
+      <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+        <SectionHeader num="04" label={`all certificates · ${CERTIFICATIONS.length} total`} />
+        <div className="certs-grid">
+          {CERTIFICATIONS.map(c => <CertRow key={c.id} c={c} />)}
+        </div>
       </div>
     </div>
   );
@@ -373,20 +407,22 @@ function AllWebinarsPage({ onBack }) {
         style={{ fontFamily: "var(--mono)", fontSize: "0.68rem", background: "none", border: "none", color: "var(--tx3)", cursor: "pointer", display: "inline-flex", alignItems: "center", gap: "0.4rem", marginBottom: "2rem", letterSpacing: "0.08em" }}>
         <BackIcon /> back to portfolio
       </button>
-      <SectionHeader num="05" label={`all webinars & training · ${WEBINAR_TOTAL} sessions`} />
-      <div className="webinars-wrap">
-        <div className="webinar-summary" style={{ borderBottom: "1px solid var(--div)" }}>
-          <span style={{ fontFamily: "var(--mono)", fontSize: "0.62rem", color: "var(--tx3)", letterSpacing: "0.08em" }}>
-            {Object.keys(WEBINARS).length} themes · click to expand
-          </span>
-          <span style={{ fontFamily: "var(--mono)", fontSize: "0.62rem", color: "var(--tx3)" }}>
-            {Object.values(WEBINARS).map(i => i.length).join(" + ")}
-          </span>
-        </div>
-        <div style={{ padding: "0 1rem" }}>
-          {Object.entries(WEBINARS).map(([theme, items]) => (
-            <WebinarGroup key={theme} theme={theme} items={items} />
-          ))}
+      <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+        <SectionHeader num="05" label={`all webinars & training · ${WEBINAR_TOTAL} sessions`} />
+        <div className="webinars-wrap">
+          <div className="webinar-summary" style={{ borderBottom: "1px solid var(--div)" }}>
+            <span style={{ fontFamily: "var(--mono)", fontSize: "0.62rem", color: "var(--tx3)", letterSpacing: "0.08em" }}>
+              {Object.keys(WEBINARS).length} themes · click to expand
+            </span>
+            <span style={{ fontFamily: "var(--mono)", fontSize: "0.62rem", color: "var(--tx3)" }}>
+              {Object.values(WEBINARS).map(i => i.length).join(" + ")}
+            </span>
+          </div>
+          <div style={{ padding: "0 1rem" }}>
+            {Object.entries(WEBINARS).map(([theme, items]) => (
+              <WebinarGroup key={theme} theme={theme} items={items} />
+            ))}
+          </div>
         </div>
       </div>
     </div>
@@ -488,8 +524,8 @@ function MainPortfolio({ setPage }) {
             <div className="about-text">
               <p><strong>Bachelor of Science in Information Technology</strong> graduate with experience in <strong>cybersecurity</strong>, <strong>system development</strong>, and <strong>project management</strong>.</p>
               <p>Completed an internship at the <strong>National Bureau of Investigation Region VI</strong>, contributing to the development of a Case File Management System and supporting IT operations.</p>
-              <p>Contributed as a researcher on the <strong>BaHanap</strong> project — an offline flood rescue communication system using LoRaWAN and IoT developed for thesis and startup competitions.</p>
-              <p>Currently building a foundation in <strong>data analytics</strong> — turning raw datasets into clear, business-relevant insights using SQL and dashboards. Open to entry-level <strong>Information Technology-related</strong> roles.</p>
+              <p>Contributed as a researcher on the <strong>BaHanap</strong> project, an offline flood rescue communication system using LoRaWAN and IoT developed for thesis and startup competitions.</p>
+              <p>Currently building a foundation in <strong>data analytics</strong>, turning raw datasets into clear, business-relevant insights using SQL and dashboards. Open to entry-level <strong>Information Technology-related</strong> roles.</p>
             </div>
             <div>
               <div style={{ fontFamily: "var(--mono)", fontSize: "0.62rem", color: "var(--acc)", letterSpacing: "0.22em", textTransform: "uppercase", marginBottom: "0.85rem" }}>skills</div>
@@ -503,7 +539,7 @@ function MainPortfolio({ setPage }) {
         </div>
 
         {/* 02 — PROJECTS */}
-        <div id="projects" className="section">
+        <div id="projects" className="section section-centered">
           <SectionHeader num="02" label="projects" />
           <div className="projects-grid">
             {PROJECTS.map(p => {
@@ -658,7 +694,11 @@ export default function App() {
         .skill-item:hover{color:var(--tx);background:var(--sf)}
         .skill-item:nth-child(2n){border-right:none}
         .skill-item:nth-last-child(-n+2){border-bottom:none}
-        .projects-grid{display:grid;grid-template-columns:1fr;border:1px solid var(--div);max-width:560px}
+        .projects-grid{display:grid;grid-template-columns:1fr 1fr;width:100%;max-width:900px;border:1px solid var(--div)}
+        .projects-grid > *{border-right:1px solid var(--div);border-bottom:1px solid var(--div)}
+        .projects-grid > *:nth-child(2n){border-right:none}
+        .projects-grid > *:nth-last-child(-n+2){border-bottom:none}
+        .projects-grid > *:last-child{border-bottom:none}
         .exp-wrap{max-width:640px;width:100%}
         .certs-grid{display:grid;grid-template-columns:1fr 1fr;width:100%;max-width:900px;border:1px solid var(--div)}
         .certs-grid > *{border-right:1px solid var(--div);border-bottom:1px solid var(--div)}
@@ -700,7 +740,10 @@ export default function App() {
           .skill-item:nth-child(2n){border-right:1px solid var(--div)}
           .skill-item:nth-last-child(-n+2){border-bottom:1px solid var(--div)}
           .skill-item:last-child{border-bottom:none}
-          .projects-grid{max-width:100%}
+          .projects-grid{grid-template-columns:1fr;max-width:100%}
+          .projects-grid > *{border-right:none}
+          .projects-grid > *:nth-last-child(-n+2){border-bottom:1px solid var(--div)}
+          .projects-grid > *:last-child{border-bottom:none}
           .exp-wrap{max-width:100%}
           .certs-grid{grid-template-columns:1fr;max-width:100%}
           .certs-grid > *{border-right:none}
