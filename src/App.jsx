@@ -309,9 +309,9 @@ const ChevronIcon = ({ open }) => (
 
 /* ─── SHARED COMPONENTS ─────────────────────────────────────────────────── */
 
-function SectionHeader({ num, label }) {
+function SectionHeader({ num, label, centered }) {
   return (
-    <div style={{ display: "flex", alignItems: "baseline", gap: "0.6rem", marginBottom: "2rem" }}>
+    <div style={{ display: "flex", justifyContent: centered ? "center" : "flex-start", alignItems: "baseline", gap: "0.6rem", marginBottom: "2rem", width: "100%" }}>
       <span style={{ fontFamily: "var(--mono)", fontSize: "0.62rem", color: "var(--tx3)", letterSpacing: "0.1em" }}>{num} —</span>
       <span style={{ fontFamily: "var(--mono)", fontSize: "0.62rem", color: "var(--acc)", letterSpacing: "0.22em", textTransform: "uppercase" }}>{label}</span>
     </div>
@@ -527,7 +527,7 @@ function MainPortfolio({ setPage }) {
 
         {/* 01 — ABOUT */}
         <div id="about" className="section">
-          <SectionHeader num="01" label="about" />
+          <SectionHeader num="01" label="about" centered />
           <div className="about-grid">
             <div className="about-text">
               <p><strong>Bachelor of Science in Information Technology</strong> graduate with experience in <strong>cybersecurity</strong>, <strong>system development</strong>, and <strong>project management</strong>.</p>
@@ -572,8 +572,8 @@ function MainPortfolio({ setPage }) {
         </div>
 
         {/* 03 — EXPERIENCE */}
-        <div id="experience" className="section">
-          <SectionHeader num="03" label="experience" />
+        <div id="experience" className="section section-centered">
+          <SectionHeader num="03" label="experience" centered />
           <div className="exp-wrap">
             {EXPERIENCE.map((e, i) => {
               const [hov, setHov] = useState(false);
