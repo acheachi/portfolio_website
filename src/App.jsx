@@ -579,16 +579,16 @@ function MainPortfolio({ setPage }) {
               const [hov, setHov] = useState(false);
               return (
                 <div key={e.id} onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}
-                  style={{ display: "grid", gridTemplateColumns: "44px 1fr", gap: "1.25rem", padding: "1.5rem 1rem", background: hov ? "rgba(145,168,130,0.04)" : "transparent", transition: "background 0.3s", borderBottom: i === EXPERIENCE.length - 1 ? "none" : "1px solid var(--div)" }}>
+                  style={{ display: "grid", gridTemplateColumns: "44px 1fr", gap: "1.25rem", padding: "1.75rem", background: hov ? "rgba(145,168,130,0.04)" : "transparent", transition: "background 0.3s", borderBottom: i === EXPERIENCE.length - 1 ? "none" : "1px solid var(--div)" }}>
                   <div style={{ width: "44px", height: "44px", borderRadius: "50%", border: "1px solid var(--div)", background: "var(--sf)", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "var(--mono)", fontSize: "0.68rem", color: "var(--acc)", letterSpacing: "0.03em", flexShrink: 0 }}>
                     {e.initials}
                   </div>
                   <div>
-                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", flexWrap: "wrap", gap: "0.5rem", marginBottom: "0.2rem" }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", flexWrap: "wrap", marginBottom: "0.3rem" }}>
                       <div style={{ fontFamily: "var(--display)", fontSize: "1.15rem", fontWeight: 400, color: "var(--tx)", letterSpacing: "-0.01em" }}>{e.org}</div>
-                      <div style={{ fontFamily: "var(--mono)", fontSize: "0.6rem", color: "var(--tx3)", letterSpacing: "0.08em", textTransform: "uppercase" }}>{e.type}</div>
+                      <span style={{ fontFamily: "var(--mono)", fontSize: "0.58rem", color: "var(--tx3)", letterSpacing: "0.06em", textTransform: "uppercase", padding: "0.15rem 0.5rem", border: "1px solid var(--div)" }}>{e.type}</span>
                     </div>
-                    <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", flexWrap: "wrap", marginBottom: "0.75rem" }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", flexWrap: "wrap", marginBottom: "0.85rem" }}>
                       <span style={{ fontFamily: "var(--mono)", fontSize: "0.66rem", color: "var(--acc)", letterSpacing: "0.06em" }}>{e.role}</span>
                       <span style={{ fontFamily: "var(--mono)", fontSize: "0.62rem", color: "var(--tx3)", letterSpacing: "0.05em" }}>· {e.year}</span>
                     </div>
@@ -697,7 +697,7 @@ export default function App() {
         .section{padding:4.5rem 0;border-top:1px solid var(--div)}
         .section-centered{display:flex;flex-direction:column;align-items:center}
         .hero{min-height:100vh;display:flex;align-items:center;padding:7rem 0 4rem}
-        .hero-inner{display:grid;grid-template-columns:1fr 200px;gap:4rem;align-items:center;width:100%}
+        .hero-inner{display:grid;grid-template-columns:1fr 280px;gap:4rem;align-items:center;width:100%}
         .hero-eyebrow{font-family:var(--mono);font-size:0.7rem;color:var(--acc);letter-spacing:0.3em;margin-bottom:1.25rem;display:flex;align-items:center;gap:0.75rem;animation:fadeUp 0.7s ease 0.1s both}
         .hero-eyebrow::before{content:'';display:block;width:28px;height:1px;background:var(--acc);opacity:0.5}
         .hero-name{font-family:var(--display);font-size:clamp(3rem,10vw,6.5rem);font-weight:300;color:var(--tx);letter-spacing:-0.03em;line-height:0.92;margin-bottom:1rem;animation:fadeUp 0.7s ease 0.2s both}
@@ -711,7 +711,7 @@ export default function App() {
         .socials{display:flex;flex-wrap:wrap;gap:1.25rem;align-items:center;animation:fadeUp 0.7s ease 0.4s both}
         .social-link{color:var(--tx3);text-decoration:none;transition:color 0.2s;display:flex;align-items:center;gap:0.4rem;font-family:var(--mono);font-size:0.68rem;letter-spacing:0.08em}
         .social-link:hover{color:var(--acc)}
-        .hero-photo{width:180px;height:220px;border:1px solid var(--div);animation:fadeUp 0.7s ease 0.3s both;position:relative;overflow:hidden}
+        .hero-photo{width:280px;height:340px;border:1px solid var(--div);animation:fadeUp 0.7s ease 0.3s both;position:relative;overflow:hidden}
         .about-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:5rem;align-items:start}
         .about-text p{font-size:0.9rem;color:var(--tx2);line-height:1.95;margin-bottom:1rem}
         .about-text p strong{color:var(--tx);font-weight:600}
