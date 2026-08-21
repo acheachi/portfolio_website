@@ -25,16 +25,22 @@ const EXPERIENCE = [
   {
     id: 1,
     year: "2026",
+    initials: "NBI",
     role: "IT Intern",
-    org: "National Bureau of Investigation — Region VI",
+    org: "National Bureau of Investigation, Region VI",
+    type: "Internship",
     desc: "Contributed to the development of a Case File Management System and supported IT operations including hardware troubleshooting, network maintenance, and user support.",
+    tech: ["C#", "WPF", "MySQL", "Networking"],
   },
   {
     id: 2,
     year: "2024",
+    initials: "BH",
     role: "Researcher",
     org: "BaHanap",
+    type: "Research Project",
     desc: "Contributed to research, technical documentation, coordination, and innovation planning for an offline flood rescue communication system using LoRaWAN and IoT, developed for thesis writing and startup competitions.",
+    tech: ["LoRaWAN", "IoT", "Technical Documentation"],
   },
 ];
 
@@ -327,7 +333,9 @@ function CertRow({ c }) {
   return (
     <div onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}
       style={{ padding: "0.7rem 1rem", display: "flex", gap: "0.75rem", alignItems: "center", background: hov ? "rgba(145,168,130,0.04)" : "transparent", transition: "background 0.2s" }}>
-      <img src={c.badgeImg} alt={c.title} style={{ width: "36px", height: "36px", objectFit: "contain", flexShrink: 0, borderRadius: "3px" }} />
+      <div style={{ width: "36px", height: "36px", borderRadius: "50%", border: "1px solid var(--div)", background: "var(--sf)", overflow: "hidden", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <img src={c.badgeImg} alt={c.title} style={{ width: "78%", height: "78%", objectFit: "contain" }} />
+      </div>
       <div style={{ flex: 1, minWidth: 0 }}>
         <div style={{ fontFamily: "var(--display)", fontSize: "0.88rem", fontWeight: 400, color: "var(--tx)", lineHeight: 1.3, marginBottom: "0.15rem" }}>{c.title}</div>
         <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", flexWrap: "wrap" }}>
@@ -487,9 +495,9 @@ function MainPortfolio({ setPage }) {
             <div>
               <div className="hero-eyebrow">BSIT Graduate · Iloilo, Philippines</div>
               <h1 className="hero-name">John Achilles<br />Colon</h1>
-              <p className="hero-location">Open to IT & Data Analytics roles</p>
+              <div className="status-pill"><span className="status-dot" />open to IT & Data Analytics roles</div>
               <p className="hero-bio">
-                Information Technology graduate building a foundation in data analytics —
+                Information Technology graduate building a foundation in data analytics,
                 turning raw datasets into clear, business-relevant insights using SQL, Power BI, and BigQuery.
               </p>
               <div className="hero-stats">
@@ -567,16 +575,31 @@ function MainPortfolio({ setPage }) {
         <div id="experience" className="section">
           <SectionHeader num="03" label="experience" />
           <div className="exp-wrap">
-            {EXPERIENCE.map((e, i) => (
-              <div key={e.id} style={{ display: "grid", gridTemplateColumns: "80px 1fr", gap: "1.5rem", paddingBottom: i === EXPERIENCE.length - 1 ? 0 : "1.75rem", marginBottom: i === EXPERIENCE.length - 1 ? 0 : "1.75rem", borderBottom: i === EXPERIENCE.length - 1 ? "none" : "1px solid var(--div)" }}>
-                <div style={{ fontFamily: "var(--mono)", fontSize: "0.68rem", color: "var(--tx3)", letterSpacing: "0.05em", paddingTop: "0.1rem" }}>{e.year}</div>
-                <div>
-                  <div style={{ fontFamily: "var(--display)", fontSize: "1.1rem", fontWeight: 400, color: "var(--tx)", marginBottom: "0.15rem" }}>{e.role}</div>
-                  <div style={{ fontFamily: "var(--mono)", fontSize: "0.65rem", color: "var(--acc)", letterSpacing: "0.06em", marginBottom: "0.6rem" }}>{e.org}</div>
-                  <p style={{ fontFamily: "var(--body)", fontSize: "0.84rem", color: "var(--tx2)", lineHeight: 1.75 }}>{e.desc}</p>
+            {EXPERIENCE.map((e, i) => {
+              const [hov, setHov] = useState(false);
+              return (
+                <div key={e.id} onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}
+                  style={{ display: "grid", gridTemplateColumns: "44px 1fr", gap: "1.25rem", padding: "1.5rem 1rem", background: hov ? "rgba(145,168,130,0.04)" : "transparent", transition: "background 0.3s", borderBottom: i === EXPERIENCE.length - 1 ? "none" : "1px solid var(--div)" }}>
+                  <div style={{ width: "44px", height: "44px", borderRadius: "50%", border: "1px solid var(--div)", background: "var(--sf)", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "var(--mono)", fontSize: "0.68rem", color: "var(--acc)", letterSpacing: "0.03em", flexShrink: 0 }}>
+                    {e.initials}
+                  </div>
+                  <div>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", flexWrap: "wrap", gap: "0.5rem", marginBottom: "0.2rem" }}>
+                      <div style={{ fontFamily: "var(--display)", fontSize: "1.15rem", fontWeight: 400, color: "var(--tx)", letterSpacing: "-0.01em" }}>{e.org}</div>
+                      <div style={{ fontFamily: "var(--mono)", fontSize: "0.6rem", color: "var(--tx3)", letterSpacing: "0.08em", textTransform: "uppercase" }}>{e.type}</div>
+                    </div>
+                    <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", flexWrap: "wrap", marginBottom: "0.75rem" }}>
+                      <span style={{ fontFamily: "var(--mono)", fontSize: "0.66rem", color: "var(--acc)", letterSpacing: "0.06em" }}>{e.role}</span>
+                      <span style={{ fontFamily: "var(--mono)", fontSize: "0.62rem", color: "var(--tx3)", letterSpacing: "0.05em" }}>· {e.year}</span>
+                    </div>
+                    <p style={{ fontFamily: "var(--body)", fontSize: "0.84rem", color: "var(--tx2)", lineHeight: 1.75, marginBottom: "0.9rem" }}>{e.desc}</p>
+                    <div style={{ display: "flex", flexWrap: "wrap", gap: "0.35rem" }}>
+                      {e.tech.map(t => <span key={t} style={{ fontFamily: "var(--mono)", fontSize: "0.6rem", color: "var(--tx3)", padding: "0.16rem 0.5rem", border: "1px solid rgba(145,168,130,0.15)" }}>{t}</span>)}
+                    </div>
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
 
@@ -607,14 +630,16 @@ function MainPortfolio({ setPage }) {
         </div>
 
         {/* 06 — RESUME */}
-        <div id="resume" className="section">
+        <div id="resume" className="section section-centered">
           <SectionHeader num="06" label="resume" />
-          <div className="resume-row">
-            <div>
-              <div className="resume-label">John Achilles Colon</div>
-              <div className="resume-sub">// last updated {new Date().toLocaleDateString("en-US", { month: "long", year: "numeric" })} · PDF</div>
+          <div className="resume-card">
+            <div className="resume-row">
+              <div>
+                <div className="resume-label">John Achilles Colon</div>
+                <div className="resume-sub">// last updated {new Date().toLocaleDateString("en-US", { month: "long", year: "numeric" })} · PDF</div>
+              </div>
+              <a href="/resume.pdf" download className="btn-dl">download resume <ArrowIcon /></a>
             </div>
-            <a href="/resume.pdf" download className="btn-dl">download resume <ArrowIcon /></a>
           </div>
         </div>
 
@@ -681,7 +706,8 @@ export default function App() {
         .stat-chip{font-family:var(--mono);font-size:0.62rem;color:var(--tx2);padding:0.3rem 0.7rem;border:1px solid var(--div);letter-spacing:0.06em;white-space:nowrap}
         .stat-chip span{color:var(--tx);font-weight:600}
         .hero-divider{width:40px;height:1px;background:var(--div);margin:0 0 1.25rem;animation:fadeUp 0.7s ease 0.38s both}
-        .hero-location{font-family:var(--mono);font-size:0.65rem;color:var(--tx3);letter-spacing:0.1em;margin-bottom:0.5rem;animation:fadeUp 0.7s ease 0.28s both}
+        .status-pill{display:inline-flex;align-items:center;gap:0.5rem;font-family:var(--mono);font-size:0.65rem;color:var(--tx3);letter-spacing:0.08em;padding:0.35rem 0.75rem;border:1px solid var(--div);margin-bottom:1.25rem;animation:fadeUp 0.7s ease 0.28s both}
+        .status-dot{width:6px;height:6px;border-radius:50%;background:var(--acc);flex-shrink:0;animation:pulse 2.2s ease-in-out infinite}
         .socials{display:flex;flex-wrap:wrap;gap:1.25rem;align-items:center;animation:fadeUp 0.7s ease 0.4s both}
         .social-link{color:var(--tx3);text-decoration:none;transition:color 0.2s;display:flex;align-items:center;gap:0.4rem;font-family:var(--mono);font-size:0.68rem;letter-spacing:0.08em}
         .social-link:hover{color:var(--acc)}
@@ -699,7 +725,7 @@ export default function App() {
         .projects-grid > *:nth-child(2n){border-right:none}
         .projects-grid > *:nth-last-child(-n+2){border-bottom:none}
         .projects-grid > *:last-child{border-bottom:none}
-        .exp-wrap{max-width:640px;width:100%}
+        .exp-wrap{max-width:640px;width:100%;border:1px solid var(--div)}
         .certs-grid{display:grid;grid-template-columns:1fr 1fr;width:100%;max-width:900px;border:1px solid var(--div)}
         .certs-grid > *{border-right:1px solid var(--div);border-bottom:1px solid var(--div)}
         .certs-grid > *:nth-child(2n){border-right:none}
@@ -707,6 +733,7 @@ export default function App() {
         .certs-grid > *:last-child{border-bottom:none}
         .webinars-wrap{max-width:680px;width:100%;border:1px solid var(--div)}
         .webinar-summary{padding:0.6rem 1rem;display:flex;justify-content:space-between;align-items:center}
+        .resume-card{width:100%;max-width:640px;border:1px solid var(--div);padding:0 1.5rem}
         .resume-row{display:flex;justify-content:space-between;align-items:center;gap:2rem;flex-wrap:wrap;padding:2rem 0}
         .resume-label{font-family:var(--display);font-size:1.9rem;font-weight:300;color:var(--tx);letter-spacing:-0.01em}
         .resume-sub{font-family:var(--mono);font-size:0.65rem;color:var(--tx3);letter-spacing:0.1em;margin-top:0.4rem}
@@ -719,6 +746,7 @@ export default function App() {
         .footer-links a{font-family:var(--mono);font-size:0.62rem;color:var(--tx3);text-decoration:none;transition:color 0.2s;letter-spacing:0.08em}
         .footer-links a:hover{color:var(--acc)}
         @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+        @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.35}}
         @media(max-width:768px){
           .nav{padding:1rem 1.5rem}
           .nav.scrolled{padding:0.85rem 1.5rem}
@@ -750,6 +778,7 @@ export default function App() {
           .certs-grid > *:nth-last-child(-n+2){border-bottom:1px solid var(--div)}
           .certs-grid > *:last-child{border-bottom:none}
           .webinars-wrap{max-width:100%}
+          .resume-card{max-width:100%;padding:0 1.25rem}
           .resume-label{font-size:1.4rem}
           .resume-row{flex-direction:column;align-items:flex-start;gap:1.25rem}
           footer{padding:1.5rem 0}
