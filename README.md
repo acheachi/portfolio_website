@@ -1,17 +1,28 @@
-# React + Vite
+# John Achilles Colon — Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A personal portfolio site showcasing my projects, experience, and certificates.
 
-Currently, two official plugins are available:
+**Live site:** [colon-ja-portfolio.netlify.app](https://colon-ja-portfolio.netlify.app/)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Sections
 
-## React Compiler
+- **About** 
+- **Projects**
+- **Experience**
+- **Certificates** 
+- **Webinars**
+- **Resume**
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Tech Stack
 
-## Expanding the ESLint configuration
+- [React](https://react.dev/)
+- [Vite](https://vite.dev/)
+- Plain CSS (inline, no framework)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
-# portfolio_website
+## Deployment
+
+Deployed on [Netlify](https://www.netlify.com/).
+
+## License
+
+Personal project — not licensed for reuse.
